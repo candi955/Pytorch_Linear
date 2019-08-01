@@ -59,6 +59,8 @@
 # torch.tensor versus torch.Tensor, etc).
 import torch
 import random
+import matplotlib.pyplot as plt
+import numpy as np
 
 class Predict():
 
@@ -103,7 +105,7 @@ class Predict():
 
             else:
 
-                print("Following are all of the parameters: ")
+                print("\n" + "\n" + "Following are all of the parameters: ")
 
                 # declaring the parameters of the linear line: w (slope, or weight) b (bias, or turn)
                 # tensors with gradients for training so can eventually reach optimal linear values
@@ -114,14 +116,36 @@ class Predict():
                 # the y prediction of possible other three lottery numbers (within the total five number count, aside
                 # from the previously chosen x inputs by the user
                 x = torch.tensor([[rNum], [firstNum], [secondNum]])
-                print("The two number lottery inputs and the random dummy number, that are going to use to predict " +
+                print("\n" + "\n" + "The two number lottery inputs and the random dummy number, that are going to use to predict " +
                 "our final three lottery numbers: ")
                 print(x)
 
                 # Obtaining y in the equation of the straight line to obtain our last three lottery number prediction
                 y = w*x+b
-                print("Our final three numbers: ")
+                print("\n" + "\n" + "Our final three numbers: ")
                 print(y)
+
+                print("\n" + "\n" + "Please see the attached line graph showing the equation of our lottery pick and predictions." +
+                      "\n" + "\n")
+
+                # creating graph to show linear regression using numpy and matplotlib
+                # reference: https://scriptverse.academy/tutorials/python-matplotlib-plot-straight-line.html
+
+                rNum = float(rNum)
+                firstNum = float(firstNum)
+                secondNum = float(secondNum)
+
+                # splitting the y tensors into three variables
+                (var1, var2, var3) = y
+
+                # attempting to plot the chart                
+                plt.plot((rNum, firstNum, secondNum), (var1, var2, var3), '-r', label='y = wx + b')
+                plt.title('Graph of y = wx + b')
+                plt.xlabel('x (input numbers)', color='#1C2833')
+                plt.ylabel('y(predictions)', color='#1C2833')
+                plt.legend(loc='upper left')
+                plt.grid()
+                plt.show()
 
                 # creating an end-of-program menu loop
                 tryAgain = input("Type 1 to start over, or 2 to quit the program.")
