@@ -1,0 +1,140 @@
+# Practice with Pytorch for making predictions
+
+# Reference: https://www.youtube.com/watch?v=TB-G1KqRb5o
+
+# 7/30/2019@22:53 Realized I needed to start my Torch practice on a new file, as it is asking for a Conda update,
+# and I do not want to get behind with my other program files being messed up again by a program update.  Worst case
+# scenario I can consider adding this to my other program or linking it somehow later if indicated for project
+# purposes.  Otherwise I might have to consider this as a separate project altogether.  I will feel it out as I
+# continue with my practice.
+# Per torch install error, I am going to attempt to update Conda, and then install Pytorch.
+# Error:
+# RemoveError:'setuptools' is a dependency of conda and cannot be removed from
+# Please update conda by running
+# conda update -n base -c defaults conda
+
+# Linear Regression 1 attempt with PyTorch
+# Attempting to create a dataset which will generally follow a linear pattern
+# Will declare a line, a linear model, with a random set of parameters, which will most likely incorrectly
+# fit the dataset. Then will try to make use of an optimization procedure called gradient descent, utilized in
+# many Machine Learning (ML) algorithms. The optimization will minimize the error of the linear model. It will keep
+# doing this until the model is trained to fit the data.
+
+# Attempting to declare a linear model, and use it to make predictions
+# Declaring variables w and b.
+# Equation of line is y = w*x + b (w is the slope(the weight), b is the bias turn, which are the parameters that
+# distinguish the linear line, and ultimately with linear regression provided with a lot of data points.. will
+# have linear model that doesn't fit the data well, will use the data points to train the linear model to have the
+# optimal weight and bias values. This will eventually provide the program with the line of best fit. After training
+# the model to have suitable parameters, given inputs, x, the linear model can then be used to make a prediction, y.
+
+# 7/31/2019@01:11am, I am having trouble getting the Pytorch module to install.  In fact, I've installed it several
+# time but it still states it hasn't installed.  Per research, currently I'm trying:
+# python -m pip install --upgrade pip
+# Also trying:
+# conda update conda
+# References:https://github.com/pytorch/pytorch/issues/4827
+# https://discuss.pytorch.org/t/issues-installing-pytorch-for-os-x-with-conda/11496
+# 6:07am torch.tensor not working, going to attempt to correct issue by loading old torch version:
+# conda install pytorch=0.4.1 cuda90 -c pytorch
+# Resource: https://pytorch.org/get-started/previous-versions/
+# 13:24pm Attempting to install PyTorch again with the following link from the PyTorch page, based on
+# utilizing Windows, Anaconda (Conda), Python 3.7, and going to try Cuda, due to am told the software will be
+# downloaded with the install, and is good for Neural Networks.  Not sure if will work due to me not having a
+# GPU though.  If not will uninstall later.
+# conda install pytorch torchvision cudatoolkit=9.0 -c pytorch
+# Reference:
+# https://deeplizard.com/learn/video/UWlFM0R_x6I
+# I included Cuda 9.0 as part of my install link from the PyTorch page, will see if it works.
+# 13:25 It's giving me trouble, am going to try the link without Cuda:
+# conda install pytorch-cpu torchvision-cpu -c pytorch
+# looks like is some sort of http error.  I might try again with the Cuda one.
+# 13:28 It looks like my computer, for reasons unknown to me, had switched to airplane mode.  Connected wifi again.
+
+import torch
+from torch.autograd import Variable
+import torch.nn as nn
+import torch.nn.functional as F
+import random
+
+class Predict():
+
+    def _linearPrediction_(self):
+
+        pred = Predict()
+
+        print('\n' + '\n' + 'Please enter your inputs of what you think the first two White Ball lottery ' +
+              'numbers will be, so that program can make a prediction of what the last three ' +
+              'numbers will be, by utilizing linear regression methods for the prediction:' + '\n')
+
+        # Gaining user input for tensor x values, while attempting exception handling
+        while True:
+            try:
+                firstNum = input('First number: ')
+                secondNum = input('Second number: ')
+
+                rNum = float(random.randint(1, 70))
+                firstNum = float(firstNum)
+                secondNum = float(secondNum)
+
+            # exception handling, basically stating 'if the above previous is not true, then do this). Once a statement
+            # is made, the program brings the user back to the main menu by calling the Predictions class and menu
+            # method
+
+
+            except ValueError:
+                print('\n' + '\n' + 'Please enter a number between 1 and 69.')
+
+            # Shouldn't have to include the random dummy number in the exception, as random number is set for
+            # greater than zero and less than 70 (for the White Ball number count).
+
+            if firstNum < 1 or firstNum > 69:
+
+                print('\n' + '\n' + 'Please enter a number between 1 and 69.')
+
+            if secondNum < 1 or secondNum > 69:
+                print('\n' + '\n' + 'Please enter a number between 1 and 69.')
+
+            else:
+
+                print("Following are all of the parameters: ")
+
+                # declaring the parameters of the linear line: w (slope, or weight) b (bias, or turn)
+                # tensors with gradients for training so can eventually reach optimal linear values
+                w = torch.tensor([3.0], requires_grad=True)
+                b = torch.tensor([1.0], requires_grad=True)
+
+                # After training the model to have suitable parameters, will give the input tensors (x), then the y prediction of
+                # possible other three lottery numbers can be made.
+
+                x = torch.tensor([[rNum], [firstNum], [secondNum]])
+                print("x value: ")
+                print(x)
+
+
+                print("hello")
+                y = w*x+b
+                print("y value: ")
+                print(y)
+
+                # creating an end-of-program menu loop
+                tryAgain = input("Type 1 to start over, or 2 to quit the program.")
+                print(tryAgain)
+
+                while True:
+
+                    if tryAgain == "1":
+                        pred._linearPrediction_()
+
+                    if tryAgain == "2":
+                        exit()
+                    else:
+                        pred._linearPrediction_()
+
+
+Predict()
+
+
+pred = Predict()
+
+pred._linearPrediction_()
