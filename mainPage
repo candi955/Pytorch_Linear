@@ -92,16 +92,18 @@ class Predict():
             # method
             except ValueError:
                 print('\n' + '\n' + 'Please enter a number between 1 and 69.')
+                pred._linearPrediction_()
 
             # Do not need to include the random dummy number in the exception, as random number is set for
             # greater than zero and less than 70 (for the White Ball number count).
 
             if firstNum < 1 or firstNum > 69:
-
                 print('\n' + '\n' + 'Please enter a number between 1 and 69.')
+                pred._linearPrediction_()
 
             if secondNum < 1 or secondNum > 69:
                 print('\n' + '\n' + 'Please enter a number between 1 and 69.')
+                pred._linearPrediction_()
 
             else:
 
@@ -138,7 +140,9 @@ class Predict():
                 # splitting the y tensors into three variables
                 (var1, var2, var3) = y
 
-                # attempting to plot the chart                
+                # attempting to plot the chart
+                plt.ylim = (0, 300)
+                plt.xlim = (0, 300)
                 plt.plot((rNum, firstNum, secondNum), (var1, var2, var3), '-r', label='y = wx + b')
                 plt.title('Graph of y = wx + b')
                 plt.xlabel('x (input numbers)', color='#1C2833')
